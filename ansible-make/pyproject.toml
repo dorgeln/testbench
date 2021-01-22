@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "ansible-make"
+version = "0.1.0"
+description = ""
+authors = ["Andreas Trawöger <atrawog@datamarble.org>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+ansible = "2.9.17"
+Jinja2 = "^2.11.2"
+PyYAML = "^5.4.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
