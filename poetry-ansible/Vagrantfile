@@ -20,11 +20,11 @@ boxes.each do |name,opts|
    # puts "#{name} = #{opts}"
 
    Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-     config.hostmanager.enabled= true
-     config.hostmanager.manage_host=true
-     config.hostmanager.manage_guest=true
-     config.hostmanager.ignore_private_ip = false
-     config.hostmanager.include_offline   = true
+     #config.hostmanager.enabled= true
+     #config.hostmanager.manage_host=true
+     #config.hostmanager.manage_guest=true
+     #config.hostmanager.ignore_private_ip = false
+     #config.hostmanager.include_offline   = true
      config.ssh.insert_key = false
      config.ssh.keys_only = true
      config.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key', '~/.ssh/id_rsa']
