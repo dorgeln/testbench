@@ -1,0 +1,3 @@
+[submodule "poetry-ansible/kubespray"]
+	path = poetry-ansible/kubespray
+	url = https://github.com/dorgeln/kubespray.git
