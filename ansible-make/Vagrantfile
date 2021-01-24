@@ -6,8 +6,10 @@ VAGRANTFILE_API_VERSION = "2"
 require 'yaml'
 
 boxes = YAML.load_file(File.join(File.dirname(__FILE__), 'inventory/vagrant.yml'))['all']['hosts']
+#puts boxes
+
 boxes.each do |name,opts|
-   # puts "#{name} = #{opts}"
+   puts "#{name} = #{opts}"
 
    Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      config.ssh.insert_key = false

@@ -4,6 +4,9 @@
 BASH_RC = ~/.bashrc
 PYTHON_VERSION = 3.8.7
 
+help:
+	@echo HELP
+
 pyenv:
 	pyenv versions | grep -q $(PYTHON_VERSION) || pyenv install $($PYTHON_VERSION)
 	pyenv local $($PYTHON_VERSION)
@@ -17,6 +20,9 @@ poetry:
 up:
 	vagrant up --no-parallel
 
+update:
+	vagrant box update
+
 down:
 	vagrant down
 
@@ -29,6 +35,8 @@ provision:
 ping:
 	poetry run ansible all -i inventory -m ping
 
+facts:
+	poetry run ansible all -i inventory -m setup
 
 destroy:
 	vagrant destroy -f

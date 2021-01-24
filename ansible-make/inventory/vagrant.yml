@@ -13,18 +13,48 @@ all:
 #      netmask: 255.255.0.0
 #      box: generic/alpine312
 #      skript: scripts/vagrant/apk.sh
-#    centos:
-#      ansible_user: vagrant
-#      ansible_ssh_host: 172.30.30.10
-#      netmask: 255.255.0.0
-#      box: generic/centos7
-#      skript: scripts/vagrant/yum.sh
-#    centos8:
-#      ansible_user: vagrant
-#      ansible_ssh_host: 172.30.30.11
-#      netmask: 255.255.0.0
-#      box: generic/centos7
-#      skript: scripts/vagrant/yum.sh
+    c70:
+      ansible_user: vagrant
+      ansible_ssh_host: 172.30.30.10
+      netmask: 255.255.0.0
+      box: generic/centos7
+      skript: scripts/vagrant/yum.sh
+
+    c80:
+      ansible_user: vagrant
+      ansible_ssh_host: 172.30.30.11
+      netmask: 255.255.0.0
+      box: generic/centos7
+      skript: scripts/vagrant/yum.sh
+
+    d10:
+      ansible_user: vagrant
+      ansible_ssh_host: 172.30.50.10
+      netmask: 255.255.0.0
+      box: generic/debian10
+      skript: scripts/vagrant/apt.sh
+
+    u20040:
+      ansible_user: vagrant
+      ansible_ssh_host: 172.30.60.10
+      netmask: 255.255.0.0
+      box: generic/ubuntu2004
+      skript: scripts/vagrant/apt.sh
+
+    u20041:
+      ansible_user: vagrant
+      ansible_ssh_host: 172.30.60.11
+      netmask: 255.255.0.0
+      box: generic/ubuntu2004
+      skript: scripts/vagrant/apt.sh
+
+    u20042:
+      ansible_user: vagrant
+      ansible_ssh_host: 172.30.60.11
+      netmask: 255.255.0.0
+      box: generic/ubuntu2004
+      skript: scripts/vagrant/apt.sh
+
 #    fedora:
 #      ansible_user: vagrant
 #      ansible_ssh_host: 172.30.40.10
@@ -43,33 +73,49 @@ all:
 #      netmask: 255.255.0.0
 #      box: generic/debian10
 #      skript: scripts/vagrant/apt.sh
-    vd1:
-      ansible_user: vagrant
-      ansible_ssh_host: 172.30.50.11
-      netmask: 255.255.0.0
-      box: generic/debian10
-      skript: scripts/vagrant/apt.sh
-    vd2:
-      ansible_user: vagrant
-      ansible_ssh_host: 172.30.50.12
-      netmask: 255.255.0.0
-      box: generic/debian10
-      skript: scripts/vagrant/apt.sh
-    vd3:
-      ansible_user: vagrant
-      ansible_ssh_host: 172.30.50.13
-      netmask: 255.255.0.0
-      box: generic/debian10
-      skript: scripts/vagrant/apt.sh
+#    vd1:
+#      ansible_user: vagrant
+#      ansible_ssh_host: 172.30.50.11
+#      netmask: 255.255.0.0
+#      box: generic/debian10
+#      skript: scripts/vagrant/apt.sh
+#    vd2:
+#      ansible_user: vagrant
+#      ansible_ssh_host: 172.30.50.12
+#      netmask: 255.255.0.0
+#      box: generic/debian10
+#      skript: scripts/vagrant/apt.sh
+#    vd3:
+#      ansible_user: vagrant
+#      ansible_ssh_host: 172.30.50.13
+#      netmask: 255.255.0.0
+#      box: generic/debian10
+#      skript: scripts/vagrant/apt.sh
 #    ubuntu1804:
 #      ansible_user: vagrant
 #      ansible_ssh_host: 172.30.60.11
 #      netmask: 255.255.0.0
 #      box: generic/ubuntu1804
 #      skript: scripts/vagrant/apt.sh
-#    ubuntu:
+#    ubuntu2004:
 #      ansible_user: vagrant
 #      ansible_ssh_host: 172.30.60.10
 #      netmask: 255.255.0.0
 #      box: generic/ubuntu2004
 #      skript: scripts/vagrant/apt.sh
+
+#all:
+#  vars:
+#    ansible_user: vagrant
+#    netmask: 255.255.0.0
+
+#  children:
+#    debian10:
+#      vars:
+#        box: generic/debian10
+#        skript: scripts/vagrant/apt.sh
+#      hosts:
+#        vd1:
+#          ansible_ssh_host: 172.30.50.10
+#        vd2:
+#        vd3:
