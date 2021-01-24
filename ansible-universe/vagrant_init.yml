@@ -1,5 +1,5 @@
 ---
-  - name: "Vagrant setup"
+  - name: Vagrant Init
     hosts: localhost
     connection: local
     tasks:

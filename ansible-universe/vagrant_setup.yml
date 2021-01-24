@@ -1,0 +1,14 @@
+---
+  - name: Vagrant Setup
+    hosts: all
+    gather_facts: yes
+    tasks:
+
+    - name: Updating /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: '{{ hostvars[item].ansible_host }} {{item}}'
+        state: present
+      with_items: '{{ groups["vagrant"] }}'
+      become: yes

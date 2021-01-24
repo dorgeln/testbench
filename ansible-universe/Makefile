@@ -21,8 +21,9 @@ poetry:
 	pip install poetry
 
 up:
-	$(ANSIBLE_PLAYBOOK_CMD) init.yml
+	$(ANSIBLE_PLAYBOOK_CMD) vagrant_init.yml
 	$(VAGRANT_CMD) up --no-parallel
+	$(ANSIBLE_PLAYBOOK_CMD) vagrant_setup.yml
 
 update:
 	$(VAGRANT_CMD) box update
@@ -44,6 +45,7 @@ facts:
 
 destroy:
 	vagrant destroy -f
+	$(ANSIBLE_PLAYBOOK_CMD) vagrant_destroy.yml
 
 versions:
 	@python --version
