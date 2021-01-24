@@ -20,9 +20,16 @@ pyenv:
 poetry:
 	pip install poetry
 
-up:
-	$(ANSIBLE_PLAYBOOK_CMD) vagrant_init.yml
+up: vagrant_init vagrant_up vagrant_setup
+	@echo Configuring Vagrant Boxes
+
+vagrant_up:
 	$(VAGRANT_CMD) up --no-parallel
+
+vagrant_init:
+	$(ANSIBLE_PLAYBOOK_CMD) vagrant_init.yml
+
+vagrant_setup:
 	$(ANSIBLE_PLAYBOOK_CMD) vagrant_setup.yml
 
 update:

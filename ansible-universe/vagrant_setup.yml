@@ -5,10 +5,18 @@
     tasks:
 
     - name: Updating /etc/hosts
+      become: yes
       lineinfile:
         dest: /etc/hosts
         regexp: '.*{{ item }}$'
         line: '{{ hostvars[item].ansible_host }} {{item}}'
         state: present
       with_items: '{{ groups["vagrant"] }}'
+
+
+    - name: Authorize root login
       become: yes
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

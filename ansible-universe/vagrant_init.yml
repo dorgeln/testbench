@@ -7,3 +7,13 @@
       template:
         src: template/boxes.yml.j2
         dest: provision/boxes.yml
+
+  - name: Cleanup known_hosts
+    hosts: localhost
+    connection: local
+    tasks:
+    - name: Remove old keys from known_hosts
+      known_hosts:
+        name: "{{ item }}"
+        state: absent
+      with_items: '{{ groups["vagrant"] }}'
