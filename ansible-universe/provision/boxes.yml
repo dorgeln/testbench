@@ -1,0 +1,5 @@
+vd1:
+  ip: 172.30.50.10
+  netmask: 255.255.0.0
+  box: generic/debian10
+  provision: provision/vagrant/apt.sh

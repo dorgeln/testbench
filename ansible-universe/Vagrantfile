@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+require 'yaml'
+
+boxes = YAML.load_file(File.join(File.dirname(__FILE__), 'provision/boxes.yml'))
+
+
+boxes.each do |name,opts|
+   puts "#{name} = #{opts}"
+
+   Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+     config.ssh.insert_key = false
+     config.ssh.keys_only = true
+     config.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key', '~/.ssh/id_rsa']
+     config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys" # 3
+     config.vm.synced_folder '.', '/vagrant', disabled: true
+
+     config.vm.define name do |machine|
+       machine.vm.hostname = name
+       machine.vm.box = opts["box"]
+       machine.vm.network :private_network, ip: opts["ip"], netmask:opts["netmask"]
+       machine.vm.provision "shell", path: opts["provision"]
+    end
+  end
+end

@@ -1,0 +1,9 @@
+---
+  - name: "Vagrant setup"
+    hosts: localhost
+    connection: local
+    tasks:
+    - name: Generate boxes.yml for Vagrant
+      template:
+        src: template/boxes.yml.j2
+        dest: provision/boxes.yml
