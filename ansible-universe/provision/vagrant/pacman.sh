@@ -7,4 +7,3 @@ EOF
 sudo pacman --noconfirm -Syu
 sudo pacman -S --noconfirm python3
 sudo pacman --noconfirm -Scc
-sudo reboot

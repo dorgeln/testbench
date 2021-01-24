@@ -6,6 +6,7 @@ PYTHON_VERSION = 3.8.7
 VAGRANT_CMD = vagrant
 ANSIBLE_CMD = poetry run ansible all -i inventory
 ANSIBLE_PLAYBOOK_CMD = poetry run ansible-playbook -i inventory
+ANSIBLE_GALAXY_CMD = poetry run ansible-galaxy install
 
 help:
 	@echo HELP
@@ -20,7 +21,7 @@ pyenv:
 poetry:
 	pip install poetry
 
-up: vagrant_init vagrant_up vagrant_setup
+up: requirements vagrant_init vagrant_update vagrant_prune vagrant_up vagrant_setup
 	@echo Configuring Vagrant Boxes
 
 vagrant_up:
@@ -32,17 +33,23 @@ vagrant_init:
 vagrant_setup:
 	$(ANSIBLE_PLAYBOOK_CMD) vagrant_setup.yml
 
-update:
+vagrant_update:
 	$(VAGRANT_CMD) box update
 
-down:
-	$(VAGRANT_CMD) down
+halt:
+	$(VAGRANT_CMD) halt
 
 status:
 	$(VAGRANT_CMD) status
 
 provision:
 	$(VAGRANT_CMD) provision
+
+vagrant_prune:
+	$(VAGRANT_CMD) box prune
+
+requirements:
+	$(ANSIBLE_GALAXY_CMD) -r requirements.yml
 
 ping:
 	$(ANSIBLE_CMD) -m ping
