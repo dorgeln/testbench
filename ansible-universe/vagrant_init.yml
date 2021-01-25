@@ -5,7 +5,7 @@
     tasks:
     - name: Generate boxes.yml for Vagrant
       template:
-        src: template/boxes.yml.j2
+        src: template/vagrant/boxes.yml.j2
         dest: provision/boxes.yml
 
   - name: Cleanup known_hosts

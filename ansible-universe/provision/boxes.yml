@@ -1,18 +1,3 @@
-va:
-  ip: 172.30.10.10
-  netmask: 255.255.0.0
-  box: generic/arch
-  provision: provision/vagrant/pacman.sh
-vp:
-  ip: 172.30.20.10
-  netmask: 255.255.0.0
-  box: generic/alpine312
-  provision: provision/vagrant/apk.sh
-vc7:
-  ip: 172.30.30.10
-  netmask: 255.255.0.0
-  box: generic/centos7
-  provision: provision/vagrant/yum.sh
 varnish:
   ip: 192.168.2.2
   netmask: 255.255.0.0
@@ -43,23 +28,3 @@ memcached:
   netmask: 255.255.0.0
   box: generic/centos7
   provision: provision/vagrant/yum.sh
-vc8:
-  ip: 172.30.40.10
-  netmask: 255.255.0.0
-  box: generic/centos8
-  provision: provision/vagrant/yum.sh
-vf:
-  ip: 172.30.50.10
-  netmask: 255.255.0.0
-  box: generic/fedora33
-  provision: provision/vagrant/dnf.sh
-vd10:
-  ip: 172.30.60.10
-  netmask: 255.255.0.0
-  box: generic/debian10
-  provision: provision/vagrant/apt.sh
-vu2004:
-  ip: 172.30.70.10
-  netmask: 255.255.0.0
-  box: generic/ubuntu2004
-  provision: provision/vagrant/apt.sh

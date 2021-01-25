@@ -21,43 +21,64 @@ pyenv:
 poetry:
 	pip install poetry
 
-up: requirements vagrant_init vagrant_update vagrant_prune vagrant_up vagrant_setup
+up: ansible-requirements vagrant-init vagrant-update vagrant-prune vagrant-up vagrant-setup
 	@echo Configuring Vagrant Boxes
 
-vagrant_up:
+ping: ansible-ping
+	@echo Checking Ansible connection
+
+destroy:vagrant-destroy
+	@echo Destroying Vagrant boxes
+
+inventory-backup:
+	cp inventory/vagrant.yml backup/vagrant.yml | true
+
+use-distrotest: inventory-backup
+	cp template/inventory/vagrant.yml.distrotest inventory/vagrant.yml
+
+use-haweb: inventory-backup
+		cp template/inventory/vagrant.yml.haweb inventory/vagrant.yml
+
+distrotest: destroy use-distrotest up
+	@echo Running Distrotest
+
+haweb: destroy use-haweb up
+		@echo Running haweb
+
+vagrant-up:
 	$(VAGRANT_CMD) up --no-parallel
 
-vagrant_init:
+vagrant-init:
 	$(ANSIBLE_PLAYBOOK_CMD) vagrant_init.yml
 
-vagrant_setup:
+vagrant-setup:
 	$(ANSIBLE_PLAYBOOK_CMD) vagrant_setup.yml
 
-vagrant_update:
+vagrant-update:
 	$(VAGRANT_CMD) box update
 
-halt:
+vagrant-halt:
 	$(VAGRANT_CMD) halt
 
-status:
+vagrant-status:
 	$(VAGRANT_CMD) status
 
-provision:
+vagrant-provision:
 	$(VAGRANT_CMD) provision
 
-vagrant_prune:
+vagrant-prune:
 	$(VAGRANT_CMD) box prune
 
-requirements:
+ansible-requirements:
 	$(ANSIBLE_GALAXY_CMD) -r requirements.yml
 
-ping:
+ansible-ping:
 	$(ANSIBLE_CMD) -m ping
 
-facts:
+ansible-facts:
 	$(ANSIBLE_CMD) -m setup
 
-destroy:
+vagrant-destroy:
 	vagrant destroy -f
 	$(ANSIBLE_PLAYBOOK_CMD) vagrant_destroy.yml
 
