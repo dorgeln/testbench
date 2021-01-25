@@ -21,7 +21,7 @@ pyenv:
 poetry:
 	pip install poetry
 
-up: ansible-requirements vagrant-init vagrant-update vagrant-prune vagrant-up vagrant-setup
+up: vagrant-init vagrant-update vagrant-prune vagrant-up vagrant-setup
 	@echo Configuring Vagrant Boxes
 
 ping: ansible-ping
@@ -31,16 +31,31 @@ destroy:vagrant-destroy
 	@echo Destroying Vagrant boxes
 		$(ANSIBLE_PLAYBOOK_CMD) vagrant_destroy.yml
 
-inventory-backup:
+backup:
 	cp inventory/vagrant.yml backup/vagrant.yml | true
+	cp configure.yml backup/configure.yml | true
+	cp requirements.yml backup/requirements.yml | true
 
-use-distrotest: inventory-backup
-	cp template/inventory/vagrant.yml.distrotest inventory/vagrant.yml
+clean: backup
+	rm inventory/vagrant.yml | true
+	rm configure.yml | true
+	rm requirements.yml | true
 
-use-haweb: inventory-backup
-		cp template/inventory/vagrant.yml.haweb inventory/vagrant.yml
+use-distrotest: backup
+	cp template/distrotest/vagrant.yml inventory/vagrant.yml
 
-distrotest: destroy use-distrotest up
+use-libvirttest: backup
+		cp template/libvirttest/vagrant.yml inventory/vagrant.yml
+
+libvirttest: destroy use-libvirttest up
+			@echo Running Libvirttest
+
+use-haweb: backup
+	cp template/haweb/vagrant.yml inventory/vagrant.yml
+	cp template/haweb/configure.yml configure.yml
+	cp template/haweb/requirements.yml requirements.yml
+
+distrotest: destroy use-distrotest ansible-requirements up
 	@echo Running Distrotest
 
 haweb: destroy use-haweb up configure

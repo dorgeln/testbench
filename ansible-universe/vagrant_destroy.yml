@@ -12,6 +12,7 @@
         state: absent
       with_items: '{{ groups["vagrant"] }}'
       become: yes
+      ignore_errors: yes
 
 
   - name: Cleanup known_hosts
@@ -23,3 +24,4 @@
         name: "{{ item }}"
         state: absent
       with_items: '{{ groups["vagrant"] }}'
+      ignore_errors: yes

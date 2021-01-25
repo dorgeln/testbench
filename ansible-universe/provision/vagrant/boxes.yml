@@ -1,30 +1,5 @@
-varnish:
-  ip: 192.168.2.2
-  netmask: 255.255.255.0
-  box: generic/centos7
-  provision: provision/vagrant/yum.sh
-www1:
-  ip: 192.168.2.3
-  netmask: 255.255.255.0
-  box: generic/centos7
-  provision: provision/vagrant/yum.sh
-www2:
-  ip: 192.168.2.4
-  netmask: 255.255.255.0
-  box: generic/centos7
-  provision: provision/vagrant/yum.sh
-db1:
-  ip: 192.168.2.5
-  netmask: 255.255.255.0
-  box: generic/centos7
-  provision: provision/vagrant/yum.sh
-db2:
-  ip: 192.168.2.6
-  netmask: 255.255.255.0
-  box: generic/centos7
-  provision: provision/vagrant/yum.sh
-memcached:
-  ip: 192.168.2.7
-  netmask: 255.255.255.0
-  box: generic/centos7
-  provision: provision/vagrant/yum.sh
+vp:
+  ip: 172.30.20.10
+  netmask: 255.255.0.0
+  box: generic/alpine312
+  provision: provision/vagrant/apk.sh
