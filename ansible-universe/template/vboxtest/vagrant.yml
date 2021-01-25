@@ -1,0 +1,16 @@
+vagrant:
+  vars:
+    ansible_user: vagrant
+    netmask: 255.255.0.0
+    cpu: 2
+    memory: 1024
+    provider: virtualbox
+
+  children:
+    ubuntu2004:
+      vars:
+        box: generic/ubuntu2004
+        provision: provision/vagrant/apt.sh
+      hosts:
+        vdefault: {ansible_host: 172.30.70.11 }
+        vbig: {ansible_host: 172.30.70.12, cpu: 4, memory: 2048}

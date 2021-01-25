@@ -6,7 +6,7 @@
     - name: Generate boxes.yml for Vagrant
       template:
         src: template/vagrant/boxes.yml.j2
-        dest: provision/vagrant/boxes.yml
+        dest: boxes.yml
 
   - name: Cleanup known_hosts
     hosts: localhost

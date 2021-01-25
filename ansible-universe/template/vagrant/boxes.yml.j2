@@ -1,7 +1,13 @@
+settings:
+  provider: {{ hostvars[groups['vagrant'][0]]['provider']}}
+
+boxes:
 {% for h in groups['vagrant'] %}
-{{ h }}:
-  ip: {{ hostvars[h].ansible_host }}
-  netmask: {{ hostvars[h].netmask }}
-  box: {{ hostvars[h].box }}
-  provision: {{ hostvars[h].provision }}
+  {{ h }}:
+    ip: {{ hostvars[h].ansible_host }}
+    netmask: {{ hostvars[h].netmask }}
+    box: {{ hostvars[h].box }}
+    provision: {{ hostvars[h].provision }}
+    cpu: {{ hostvars[h].cpu }}
+    memory: {{ hostvars[h].memory }}
 {% endfor %}

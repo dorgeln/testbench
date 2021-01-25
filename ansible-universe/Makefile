@@ -21,17 +21,20 @@ pyenv:
 poetry:
 	pip install poetry
 
-up: vagrant-init vagrant-update vagrant-prune vagrant-up vagrant-setup
+up: ansible-requirements vagrant-init vagrant-update vagrant-prune vagrant-up vagrant-setup configure
 	@echo Configuring Vagrant Boxes
 
 ping: ansible-ping
 	@echo Checking Ansible connection
 
-destroy:vagrant-destroy
+destroy: vagrant-destroy
 	@echo Destroying Vagrant boxes
 		$(ANSIBLE_PLAYBOOK_CMD) vagrant_destroy.yml
 
 backup:
+	rm backup/vagrant.yml | true
+	rm backup/configure.yml | true
+	rm backup/requirements.yml | true
 	cp inventory/vagrant.yml backup/vagrant.yml | true
 	cp configure.yml backup/configure.yml | true
 	cp requirements.yml backup/requirements.yml | true
@@ -41,25 +44,42 @@ clean: backup
 	rm configure.yml | true
 	rm requirements.yml | true
 
-use-distrotest: backup
-	cp template/distrotest/vagrant.yml inventory/vagrant.yml
-
 use-libvirttest: backup
 		cp template/libvirttest/vagrant.yml inventory/vagrant.yml
 
-libvirttest: destroy use-libvirttest up
-			@echo Running Libvirttest
+use-vboxtest: backup
+	cp template/vboxtest/vagrant.yml inventory/vagrant.yml
+
+vboxtest: destroy use-vboxtest up
+	@echo Running vboxtest
+
+libvirttest: destroy clean use-libvirttest up
+	@echo Running libvirttest
 
 use-haweb: backup
 	cp template/haweb/vagrant.yml inventory/vagrant.yml
 	cp template/haweb/configure.yml configure.yml
 	cp template/haweb/requirements.yml requirements.yml
 
-distrotest: destroy use-distrotest ansible-requirements up
+haweb: destroy clean use-haweb up configure
+	@echo Running haweb
+
+use-elk: backup
+		cp template/elk/vagrant.yml inventory/vagrant.yml
+		cp template/elk/configure.yml configure.yml
+		cp template/elk/requirements.yml requirements.yml
+
+elk: destroy clean use-elk up configure
+		@echo Running elk
+
+use-distrotest: backup
+	cp template/distrotest/vagrant.yml inventory/vagrant.yml
+
+
+distrotest: destroy clean use-distrotest up
 	@echo Running Distrotest
 
-haweb: destroy use-haweb up configure
-		@echo Running haweb
+
 
 status: vagrant-status
 	@echo Status
@@ -92,7 +112,7 @@ vagrant-prune:
 	$(VAGRANT_CMD) box prune
 
 ansible-requirements:
-	$(ANSIBLE_GALAXY_CMD) -r requirements.yml
+	$(ANSIBLE_GALAXY_CMD) -r requirements.yml | true
 
 ansible-ping:
 	$(ANSIBLE_CMD) -m ping
@@ -101,7 +121,7 @@ ansible-facts:
 	$(ANSIBLE_CMD) -m setup
 
 vagrant-destroy:
-	vagrant destroy -f
+	vagrant destroy -f  | true
 
 
 versions:

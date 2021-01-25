@@ -2,6 +2,9 @@ vagrant:
   vars:
     ansible_user: vagrant
     netmask: 255.255.0.0
+    cpu: 1
+    memory: 512
+    provider: libvirt
 
   children:
     arch:

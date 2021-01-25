@@ -1,5 +1,0 @@
-vp:
-  ip: 172.30.20.10
-  netmask: 255.255.0.0
-  box: generic/alpine312
-  provision: provision/vagrant/apk.sh

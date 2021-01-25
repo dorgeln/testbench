@@ -4,7 +4,10 @@
 VAGRANTFILE_API_VERSION = "2"
 
 require 'yaml'
-boxes = YAML.load_file(File.join(File.dirname(__FILE__), 'provision/vagrant/boxes.yml'))
+boxes = YAML.load_file(File.join(File.dirname(__FILE__), 'boxes.yml'))
+provider = boxes['settings']['provider']
+#puts boxes
+ENV['VAGRANT_DEFAULT_PROVIDER'] = provider
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false
@@ -13,13 +16,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys" # 3
   config.vm.synced_folder '.', '/vagrant', disabled: true
 
-boxes.each do |name,opts|
+
+boxes['boxes'].each do |name,opts|
    # puts "#{name} = #{opts}"
      config.vm.define name do |machine|
        machine.vm.hostname = name
        machine.vm.box = opts["box"]
        machine.vm.network :private_network, ip: opts["ip"], netmask:opts["netmask"]
        machine.vm.provision "shell", path: opts["provision"]
+       machine.vm.provider provider do |p|
+         p.memory = opts['memory']
+         p.cpus = opts['cpu']
+       end
+
     end
   end
 end

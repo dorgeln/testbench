@@ -2,7 +2,10 @@ vagrant:
   vars:
     ansible_user: vagrant
     netmask: 255.255.255.0
-
+    cpu: 2
+    memory: 1024
+    provider: libvirt
+    
   children:
     centos7:
       vars:
@@ -29,7 +32,7 @@ vagrant:
       hosts:
         db1:
         db2:
-        
+
     memcachedserver:
       hosts:
         memcached:
