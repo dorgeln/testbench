@@ -1,5 +1,5 @@
 ---
-- hosts: www
+- hosts: apacheserver
   become: yes
 
   vars_files:

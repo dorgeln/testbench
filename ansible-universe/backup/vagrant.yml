@@ -4,51 +4,28 @@ vagrant:
     netmask: 255.255.0.0
 
   children:
-    arch:
-      vars:
-        box: generic/arch
-        provision: provision/vagrant/pacman.sh
-      hosts:
-        va: {ansible_host: 172.30.10.10}
-
-    alpine312:
-      vars:
-        box: generic/alpine312
-        provision: provision/vagrant/apk.sh
-      hosts:
-        vp: {ansible_host: 172.30.20.10}
-
     centos7:
       vars:
         box: generic/centos7
         provision: provision/vagrant/yum.sh
       hosts:
-        vc7: {ansible_host: 172.30.30.10}
-
-    centos8:
-      vars:
-        box: generic/centos8
-        provision: provision/vagrant/yum.sh
+        varnish0: {ansible_host: 192.168.2.2}
+        www1: {ansible_host: 192.168.2.3}
+        www2: {ansible_host: 192.168.2.4}
+        db1: {ansible_host: 192.168.2.5}
+        db2: {ansible_host: 192.168.2.6}
+        memcached0: {ansible_host: 192.168.2.7}
+    varnish:
       hosts:
-        vc8: {ansible_host: 172.30.40.10}
-
-    fedora33:
-      vars:
-        box: generic/fedora33
-        provision: provision/vagrant/dnf.sh
+        varnish0:
+    www:
       hosts:
-        vf: {ansible_host: 172.30.50.10}
-
-    debian10:
-      vars:
-        box: generic/debian10
-        provision: provision/vagrant/apt.sh
+        www1:
+        www2:
+    db:
       hosts:
-        vd10: {ansible_host: 172.30.60.10}
-
-    ubuntu2004:
-      vars:
-        box: generic/ubuntu2004
-        provision: provision/vagrant/apt.sh
+        db1:
+        db2:
+    memcached:
       hosts:
-        vu2004: {ansible_host: 172.30.70.10}
+        memcached0:

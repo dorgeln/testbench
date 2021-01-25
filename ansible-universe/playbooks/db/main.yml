@@ -1,5 +1,5 @@
 ---
-- hosts: db
+- hosts: mysqlserver
   become: yes
 
   vars_files:
@@ -10,14 +10,14 @@
       set_fact:
         mysql_users:
           - name: mycompany_user
-            host: "{{ groups['www'][0] }}"
+            host: "{{ groups['apacheserver'][0] }}"
             password: secret
             priv: "*.*:SELECT"
           - name: mycompany_user
-            host: "{{ groups['www'][1] }}"
+            host: "{{ groups['apacheserver'][1] }}"
             password: secret
             priv: "*.*:SELECT"
-        mysql_replication_master: "{{ groups['db'][0] }}"
+        mysql_replication_master: "{{ groups['mysqlserver'][0] }}"
 
   roles:
     - geerlingguy.firewall

@@ -29,6 +29,7 @@ ping: ansible-ping
 
 destroy:vagrant-destroy
 	@echo Destroying Vagrant boxes
+		$(ANSIBLE_PLAYBOOK_CMD) vagrant_destroy.yml
 
 inventory-backup:
 	cp inventory/vagrant.yml backup/vagrant.yml | true
@@ -42,11 +43,14 @@ use-haweb: inventory-backup
 distrotest: destroy use-distrotest up
 	@echo Running Distrotest
 
-haweb: destroy use-haweb up
+haweb: destroy use-haweb up configure
 		@echo Running haweb
 
 status: vagrant-status
 	@echo Status
+
+configure:
+		$(ANSIBLE_PLAYBOOK_CMD) configure.yml
 
 vagrant-up:
 	$(VAGRANT_CMD) up --no-parallel
@@ -83,7 +87,7 @@ ansible-facts:
 
 vagrant-destroy:
 	vagrant destroy -f
-	$(ANSIBLE_PLAYBOOK_CMD) vagrant_destroy.yml
+
 
 versions:
 	@python --version

@@ -1,5 +1,5 @@
 ---
-- hosts: memcached
+- hosts: memcachedserver
   become: yes
 
   vars_files:

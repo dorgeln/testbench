@@ -1,7 +1,7 @@
 vagrant:
   vars:
     ansible_user: vagrant
-    netmask: 255.255.0.0
+    netmask: 255.255.255.0
 
   children:
     centos7:
@@ -9,23 +9,27 @@ vagrant:
         box: generic/centos7
         provision: provision/vagrant/yum.sh
       hosts:
-        varnish0: {ansible_host: 192.168.2.2}
+        varnish: {ansible_host: 192.168.2.2}
         www1: {ansible_host: 192.168.2.3}
         www2: {ansible_host: 192.168.2.4}
         db1: {ansible_host: 192.168.2.5}
         db2: {ansible_host: 192.168.2.6}
-        memcached0: {ansible_host: 192.168.2.7}
-    varnish:
+        memcached: {ansible_host: 192.168.2.7}
+
+    varnishserver:
       hosts:
-        varnish0:
-    www:
+        varnish:
+
+    apacheserver:
       hosts:
         www1:
         www2:
-    db:
+
+    mysqlserver:
       hosts:
         db1:
         db2:
-    memcached:
+        
+    memcachedserver:
       hosts:
-        memcached0:
+        memcached:
