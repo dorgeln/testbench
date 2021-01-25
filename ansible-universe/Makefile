@@ -45,6 +45,9 @@ distrotest: destroy use-distrotest up
 haweb: destroy use-haweb up
 		@echo Running haweb
 
+status: vagrant-status
+	@echo Status
+
 vagrant-up:
 	$(VAGRANT_CMD) up --no-parallel
 

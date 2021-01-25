@@ -1,4 +1,4 @@
-varnish:
+varnish0:
   ip: 192.168.2.2
   netmask: 255.255.0.0
   box: generic/centos7
@@ -23,7 +23,7 @@ db2:
   netmask: 255.255.0.0
   box: generic/centos7
   provision: provision/vagrant/yum.sh
-memcached:
+memcached0:
   ip: 192.168.2.7
   netmask: 255.255.0.0
   box: generic/centos7

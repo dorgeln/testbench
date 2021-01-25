@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 require 'yaml'
-boxes = YAML.load_file(File.join(File.dirname(__FILE__), 'provision/boxes.yml'))
+boxes = YAML.load_file(File.join(File.dirname(__FILE__), 'provision/vagrant/boxes.yml'))
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false

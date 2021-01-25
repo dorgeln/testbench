@@ -9,23 +9,23 @@ vagrant:
         box: generic/centos7
         provision: provision/vagrant/yum.sh
       hosts:
-        varnish: {ansible_host: 192.168.2.2}
+        varnish0: {ansible_host: 192.168.2.2}
         www1: {ansible_host: 192.168.2.3}
         www2: {ansible_host: 192.168.2.4}
         db1: {ansible_host: 192.168.2.5}
         db2: {ansible_host: 192.168.2.6}
-        memcached: {ansible_host: 192.168.2.7}
-    lamp_varnish:
+        memcached0: {ansible_host: 192.168.2.7}
+    varnish:
       hosts:
-        varnish:
-    lamp_www:
+        varnish0:
+    www:
       hosts:
         www1:
         www2:
-    lamp_db:
+    db:
       hosts:
         db1:
         db2:
-    lamp_memcached:
+    memcached:
       hosts:
-        memcached:
+        memcached0:

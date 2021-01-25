@@ -131,4 +131,5 @@ dmypy.json
 # Vagrant
 **/.vagrant
 inventory/vagrant.yml
+provision/vagrant/boxes.yml
 backup/*
