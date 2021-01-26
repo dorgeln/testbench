@@ -1,12 +1,11 @@
-
-.PHONY: pyenv poetry versions
-
 BASH_RC = ~/.bashrc
 PYTHON_VERSION = 3.8.7
 VAGRANT_CMD = vagrant
 ANSIBLE_CMD = poetry run ansible all -i inventory
 ANSIBLE_PLAYBOOK_CMD = poetry run ansible-playbook -i inventory
 ANSIBLE_GALAXY_CMD = poetry run ansible-galaxy install
+TEMPLATE = maketest
+
 
 help:
 	@echo HELP
@@ -21,71 +20,40 @@ pyenv:
 poetry:
 	pip install poetry
 
-up: ansible-requirements vagrant-init vagrant-update vagrant-prune vagrant-up vagrant-setup configure
-	@echo Configuring Vagrant Boxes
+up: use ansible-requirements vagrant-init vagrant-update vagrant-prune vagrant-up vagrant-setup configure
+	@echo Finished
 
 ping: ansible-ping
 	@echo Checking Ansible connection
 
 destroy: vagrant-destroy
 	@echo Destroying Vagrant boxes
-		$(ANSIBLE_PLAYBOOK_CMD) vagrant_destroy.yml
+	$(ANSIBLE_PLAYBOOK_CMD) vagrant_destroy.yml
+
+use: backup
+	@cp -v template/$(TEMPLATE)/vagrant.yml inventory/vagrant.yml
+	@[ -f template/$(TEMPLATE)/configure.yml ]  && cp -v template/$(TEMPLATE)/configure.yml configure.yml || true
+	@[ -f template/$(TEMPLATE)/requirements.yml ]  && cp -v template/$(TEMPLATE)/requirements.yml requirements.yml || true
+
 
 backup:
-	rm backup/vagrant.yml | true
-	rm backup/configure.yml | true
-	rm backup/requirements.yml | true
-	cp inventory/vagrant.yml backup/vagrant.yml | true
-	cp configure.yml backup/configure.yml | true
-	cp requirements.yml backup/requirements.yml | true
+	@[ -f backup/vagrant.yml ] && rm -v backup/vagrant.yml || true
+	@[ -f backup/configure.yml ] && rm -v backup/configure.yml || true
+	@[ -f backup/requirements.yml ] && rm -v backup/requirements.yml || true
+	@[ -f inventory/vagrant.yml ] && cp inventory/vagrant.yml backup/vagrant.yml || true
+	@[ -f configure.yml ] && cp configure.yml backup/configure.yml || true
+	@[ -f requirements.yml ] && cp requirements.yml backup/requirements.yml || true
 
 clean: backup
-	rm inventory/vagrant.yml | true
-	rm configure.yml | true
-	rm requirements.yml | true
-
-use-libvirttest: backup
-		cp template/libvirttest/vagrant.yml inventory/vagrant.yml
-
-use-vboxtest: backup
-	cp template/vboxtest/vagrant.yml inventory/vagrant.yml
-
-vboxtest: destroy use-vboxtest up
-	@echo Running vboxtest
-
-libvirttest: destroy clean use-libvirttest up
-	@echo Running libvirttest
-
-use-haweb: backup
-	cp template/haweb/vagrant.yml inventory/vagrant.yml
-	cp template/haweb/configure.yml configure.yml
-	cp template/haweb/requirements.yml requirements.yml
-
-haweb: destroy clean use-haweb up configure
-	@echo Running haweb
-
-use-elk: backup
-		cp template/elk/vagrant.yml inventory/vagrant.yml
-		cp template/elk/configure.yml configure.yml
-		cp template/elk/requirements.yml requirements.yml
-
-elk: destroy clean use-elk up configure
-		@echo Running elk
-
-use-distrotest: backup
-	cp template/distrotest/vagrant.yml inventory/vagrant.yml
-
-
-distrotest: destroy clean use-distrotest up
-	@echo Running Distrotest
-
-
+	@[ -f inventory/vagrant.yml ] && rm inventory/vagrant.yml || true
+	@[ -f configure.yml ] && rm configure.yml || true
+	@[ -f requirements.yml ] && rm requirements.yml || true
 
 status: vagrant-status
 	@echo Status
 
 configure:
-		$(ANSIBLE_PLAYBOOK_CMD) configure.yml
+	@[ -f configure.yml ] && $(ANSIBLE_PLAYBOOK_CMD) configure.yml || echo "No configure.yml"
 
 vagrant-up:
 	$(VAGRANT_CMD) up --no-parallel
@@ -112,7 +80,7 @@ vagrant-prune:
 	$(VAGRANT_CMD) box prune
 
 ansible-requirements:
-	$(ANSIBLE_GALAXY_CMD) -r requirements.yml | true
+	@[ -f requirements.yml ] && $(ANSIBLE_GALAXY_CMD) -r requirements.yml || echo "No requirements.yml"
 
 ansible-ping:
 	$(ANSIBLE_CMD) -m ping
@@ -121,7 +89,7 @@ ansible-facts:
 	$(ANSIBLE_CMD) -m setup
 
 vagrant-destroy:
-	vagrant destroy -f  | true
+	vagrant destroy -f  || true
 
 
 versions:
