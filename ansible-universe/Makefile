@@ -20,7 +20,7 @@ pyenv:
 poetry:
 	pip install poetry
 
-up: use ansible-requirements vagrant-init vagrant-update vagrant-prune vagrant-up vagrant-setup configure
+up: destroy use ansible-requirements vagrant-init vagrant-update vagrant-prune vagrant-up vagrant-setup configure
 	@echo Finished
 
 ping: ansible-ping
@@ -90,7 +90,6 @@ ansible-facts:
 
 vagrant-destroy:
 	vagrant destroy -f  || true
-
 
 versions:
 	@python --version
